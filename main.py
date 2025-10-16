@@ -1,9 +1,9 @@
 def app_started(app):
     # app_started: kjøres én gang når programmet starter.
     # Her oppretter vi variabler i `app`` og gir dem initiell verdi.
-    app.timer_delay = 100
+    app.timer_delay = 16
     app.key_presses = set()
-    app.ship = Ship(app.width/2, app.height/2, 8)
+    app.ship = Ship(app.width/2, app.height/2, 4)
     app.projectile = []
 
 def key_pressed(app, event):
@@ -51,7 +51,7 @@ class Projectile:
 
 class Ship:
     def __init__(self, x, y, speed):
-        self.img = Image.open("./ship.png")
+        self.img = scaled_image(Image.open("./ship.png"), 2)
 
         self.x = x
         self.y = y
@@ -120,8 +120,7 @@ class Ship:
 
 
     def draw(self, canvas):
-        scaled_ship = scaled_image(self.img, 2)
-        rotated_ship = scaled_ship.rotate(self.angle)
+        rotated_ship = self.img.rotate(self.angle)
 
         canvas.create_image(self.x, self.y, pil_image=rotated_ship)
         for projectil in self.bullets:
