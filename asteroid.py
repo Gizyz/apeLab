@@ -7,11 +7,12 @@ class Asteroid:
         self.y = 0
         self.points = change_vertices(poly_points, self.x, self.y)
 
+        self.app = app
         self.angle = angle
         self.speed = speed
 
     def move(self):
-        x_movement, y_movement = xy_movefromangle(self.angle, self.speed)
+        x_movement, y_movement = xy_movefromangle(self.angle, self.speed, self.app)
         self.x -= x_movement
         self.y -= y_movement
         for i in range(len(self.points)):
@@ -21,4 +22,4 @@ class Asteroid:
             self.points[i] = (x, y)
 
     def draw(self, canvas):
-        canvas.create_polygon(self.points, outline='black')
+        canvas.create_polygon(self.points, outline='white')

@@ -1,6 +1,6 @@
 from uib_inf100_graphics.helpers import scaled_image
 from PIL import Image
-from helpers import xy_movefromangle, accelerate,change_vertices
+from helpers import xy_movefromangle, accelerate
 
 
 class Projectile:
@@ -8,21 +8,22 @@ class Projectile:
         self.x = x
         self.y = y
         self.points = [(self.x-2, self.y-2), (self.x+2, self.y+2)]
+
         self.angle = angle
         self.speed = speed
     
-    def move(self):
-        x_movement, y_movement = xy_movefromangle(self.angle, self.speed)
+    def move(self, app):
+        x_movement, y_movement = xy_movefromangle(self.angle, self.speed, app)
         self.x -= x_movement
         self.y -= y_movement
         self.points = [(self.x-2, self.y-2), (self.x+2, self.y+2)]
 
     def draw(self, canvas):
-        canvas.create_rectangle(self.x-2, self.y-2, self.x+2, self.y+2, fill='black')
+        canvas.create_rectangle(self.x-2, self.y-2, self.x+2, self.y+2, fill='red')
 
 class Ship:
     def __init__(self, x, y, speed):
-        self.img = scaled_image(Image.open("./ship.png"), 2)
+        self.img = scaled_image(Image.open("./ship2.png"), 2)
 
         self.x = x
         self.y = y
@@ -68,9 +69,8 @@ class Ship:
         if self.fire_timer <= 0:
             self.bullets.append(Projectile(self.x, self.y, 20, self.angle))
             self.fire_timer = self.fire_delay
-            for bullet in self.bullets:
-                if bullet.x < 0 or bullet.x > app.width or bullet.y < 0 or bullet.y > app.height:
-                    self.bullets.pop(0)
+            self.bullets = [ b for b in self.bullets 
+                            if 0 <= b.x <= app.width and 0 <= b.y <= app.height]
 
 
     def turn(self):
@@ -79,7 +79,7 @@ class Ship:
 
         # Apply friction to rotation (may need some fine-tuning)
         (self.rotacc, self.rotvel) = accelerate(self.rotacc, self.rotvel, -0.2)
-        self.rotacc = self.rotvel + round(self.rotacc, 2) * 0.5
+        self.rotacc = self.rotvel + self.rotacc * 0.5
         
         # Ensure the angle stays within bounds [0, 360)
         self.angle += self.rotacc
@@ -102,12 +102,12 @@ class Ship:
 
 
         (self.acceleration, self.velocity) = accelerate(self.acceleration, self.velocity, self.FRICTION)
-        self.acceleration = self.velocity + round(self.acceleration, 2) * 0.5
+        self.acceleration = self.velocity + self.acceleration, 2 * 0.5
 
         if self.velocity > 0:
-            x_movement, y_movement = xy_movefromangle(self.angle, self.velocity)
-            self.x = round(self.x, 2) - round(x_movement, 2)
-            self.y = round(self.y, 2) - round(y_movement, 2)
+            x_movement, y_movement = xy_movefromangle(self.angle, self.velocity, app)
+            self.x = self.x - x_movement
+            self.y = self.y - y_movement
 
             #print((self.x, self.y))
 
@@ -116,5 +116,4 @@ class Ship:
 
         canvas.create_image(self.x, self.y, pil_image=rotated_ship)
         for bullet in self.bullets:
-            bullet.move()
             bullet.draw(canvas)
