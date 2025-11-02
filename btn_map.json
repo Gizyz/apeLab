@@ -1,0 +1,47 @@
+[
+    {
+        "name": "Play",
+        "positions": [400, 100, 600, 200],
+        "cost": 0,
+        "event": "game_start",
+        "max": -1
+
+    },
+    {
+        "name": "Ship speed++",
+        "positions": [200, 100, 300, 200],
+        "cost": 50,
+        "event": "speed_increase",
+        "max": 20
+    },
+    {
+        "name": "Bullet speed++",
+        "positions": [100, 100, 200, 200],
+        "cost": 50,
+        "event": "bullet_speed_increase",
+        "max": 10
+
+    },
+    {
+        "name": "Rate of Fire++",
+        "positions": [200, 200, 300, 300],
+        "cost": 50,
+        "event": "rof_increase",
+        "max": 20
+    },
+    {
+        "name": "Asteroid Count++",
+        "positions": [300, 300, 400, 400],
+        "cost": 50,
+        "event": "asteroid_increase",
+        "max": 10
+
+    },
+    {
+        "name": "Bullet Damage++",
+        "positions": [400, 400, 500, 500],
+        "cost": 50,
+        "event": "damage_increase",
+        "max": 10
+    }   
+]

@@ -11,6 +11,7 @@ class Projectile:
 
         self.angle = angle
         self.speed = speed
+        
     
     def move(self, app):
         x_movement, y_movement = xy_movefromangle(self.angle, self.speed, app)
@@ -22,7 +23,7 @@ class Projectile:
         canvas.create_rectangle(self.x-2, self.y-2, self.x+2, self.y+2, fill='red')
 
 class Ship:
-    def __init__(self, x, y, speed):
+    def __init__(self, x, y, speed, delay):
         self.img = scaled_image(Image.open("./ship2.png"), 2)
 
         self.x = x
@@ -41,7 +42,7 @@ class Ship:
         self.rotvel = 0
 
         self.shooting = False
-        self.fire_delay = 2
+        self.fire_delay = delay
         self.fire_timer = 0
         self.bullets=[]
 
@@ -67,7 +68,7 @@ class Ship:
 
     def shoot(self, app):
         if self.fire_timer <= 0:
-            self.bullets.append(Projectile(self.x, self.y, 20, self.angle))
+            self.bullets.append(Projectile(self.x, self.y, app.bullet_speed, self.angle))
             self.fire_timer = self.fire_delay
             self.bullets = [ b for b in self.bullets 
                             if 0 <= b.x <= app.width and 0 <= b.y <= app.height]
