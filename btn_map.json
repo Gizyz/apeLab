@@ -5,7 +5,6 @@
         "cost": 0,
         "event": "game_start",
         "max": -1
-
     },
     {
         "name": "Ship speed++",
@@ -43,5 +42,12 @@
         "cost": 50,
         "event": "damage_increase",
         "max": 10
-    }   
+    },
+    {
+        "name": "Bullet Damage++",
+        "positions": [100, 500, 200, 550],
+        "cost": 50,
+        "event": "damage_increase",
+        "max": 10
+    }
 ]

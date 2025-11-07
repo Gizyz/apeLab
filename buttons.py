@@ -56,13 +56,16 @@ def create_menu():
 
 def speed_increase(app):
     app.ship_speed += 0.1
+
 def bullet_speed_increase(app):
     app.bullet_speed += 1
+
 def rof_increase(app):
     app.fire_rate -= 1
-    
+
 def damage_increase(app):
     app.bullet_damage += 1
+    
 def asteroid_increase(app):
     app.asteroid_count += 1
 
