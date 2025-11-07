@@ -43,5 +43,5 @@
         "cost": 50,
         "event": "damage_increase",
         "max": 10
-    }   
+    }
 ]
